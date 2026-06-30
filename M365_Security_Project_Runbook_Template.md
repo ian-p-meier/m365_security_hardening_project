@@ -10,33 +10,37 @@ For every section below, capture: **what you did**, **why you did it**, **what y
 ---
 
 ## 1. Project Overview
-- Goal of the environment (e.g., "stand up a clean M365 tenant and harden it to a high Secure Score, simulating a small business / SMB client environment")
-- Starting point (fresh tenant? trial license tier used — e.g., M365 Business Premium?)
-- Scope / what's in vs. out (e.g., "single tenant, ~X simulated users, no hybrid AD")
-- Tools/licenses used (Entra ID P1/P2, Defender for Business/MDE, Intune, etc.)
+- Goal of the environment: To create a consistent M365 Environment from Scratch to be as secure as possible while not increasing friction
+- Starting point: Fresh Tenant with M365 Business Premium and Micrsoft Defender for Endpoint Plan 2
+- Scope: Single Tenat, no B2B collaborations, Cloud Native devices and applications. Microsoft EcoSystem
+- Tools/licenses used: Microsoft M365 Business Premium, Microsoft Defender for Endpoint Plan 2
 
 ## 2. Secure Score Tracking
 | Date | Secure Score | Notes / What changed |
 |------|-------------|----------------------|
-| | | Baseline / starting score |
-| | | After identity hardening |
-| | | After endpoint hardening |
-| | | Final |
-
-(Screenshot the Secure Score page at each milestone — save images alongside this doc.)
+|4/19/26 |66% | Baseline / starting score |
+|4/20/26 |68% | After identity hardening |
+|6/28/26 |72% | After endpoint hardening |
+|6/30/26 |72% | Final |
 
 ## 3. Identity & Access
 For each item: policy name, what it does, why, what you considered instead, result/screenshot reference.
 
-- **Conditional Access policies** (list each one individually)
-- **MFA enforcement** (method required, any exclusions, break-glass account setup)
-- **Legacy authentication** (blocked? how?)
-- **Privileged role management** (PIM used? admin role assignments?)
-- **Password policy / self-service reset**
+- **Conditional Access policies**
+- **MFA enforcement** All Users require a form of MFA configure by the Authentication Methods Policies
+- **Legacy authentication** Blocked Legacy Authentication preventing Exchange ActiveSync Cliets as well as other clients for Authenticating to that account
+- **Require MFA for All Admins** Admins must have a form of MFA configured by the Authentication Methods Policies
+- **Require MFA for All Guests** Guest users must register a valid form of MFA.
+- **Device Compliance for Access to Resources** Requires a device to be marked as compliant in order to access resources
+- **No Persistent Browser Session** Prevents a browser from staying in session will also require a browser sign in to occur every 4 hours if the browser is open.
+- **Session Timeout Admin Portal** Does not allow an Admin to have the portal open for longer that 1 hour
+- **Authentication Stregnth Admins (TESTING)** Reporting only on Passwordless authentication
+- **Privileged role management** - Assigned Unlicensed users, currently testing stronger authentication to verify a more robust sign in request
+- **Password policy / self-service reset** - Configured for all users requiring two methods of MFA (Retiring security questions, ran into errors on the disabling of the option)
 
 ## 4. Endpoint Management (Intune / Defender)
-- **Device compliance policies** (what's required to be "compliant" — encryption, OS version, etc.)
-- **Configuration profiles** (what's enforced on devices)
+- **Device compliance policies**: For a device to be compliant, the following must be true: Secure Boot Enabled, Code Integrity Enabled, BitLocker configured, Running Windows 10.0.22621, TPM must be enabled, Microsoft Security Settings all enabled, prevent simple passwords, must have at least 8 characters, and the device is not listed no higher than Medium in M365 Defender for Endpoint.
+- **Configuration profiles**: Devices have the following configured: Windows Attack Surface Reduction Policies (Provides foundational protection against malicious activities
 - **App protection policies** (if applicable)
 - **Defender for Endpoint / MDE onboarding** (what tier, what's monitored)
 - **Patch management approach**
