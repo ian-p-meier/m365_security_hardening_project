@@ -1,3 +1,5 @@
+#This is a work in progress with instructions on what needs to happen
+
 # M365 Tenant Security Hardening — Project Runbook
 
 ## How to Use This Document
